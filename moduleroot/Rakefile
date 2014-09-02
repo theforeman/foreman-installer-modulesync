@@ -12,4 +12,4 @@ PuppetLint.configuration.fail_on_warnings = true
 PuppetLint.configuration.send('<%= check %>')
 <% end -%>
 
-task :default => [:lint, :syntax, :spec]
+task :default => [:lint, :validate, :spec]
