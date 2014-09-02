@@ -32,8 +32,9 @@ spec/fixtures/
 pkg/
 /metadata.json
 coverage/
-
 <% if ! @configs['paths'].nil? -%>
+
+# Module-specific paths
 <% @configs['paths'].each do |path| -%>
 <%= path %>
 <% end -%>
