@@ -1,0 +1,9 @@
+---
+- puppet-concat
+- puppet-dhcp
+- puppet-dns
+- puppet-foreman
+- puppet-foreman_proxy
+- puppet-git
+- puppet-puppet
+- puppet-tftp

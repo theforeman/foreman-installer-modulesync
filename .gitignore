@@ -1,0 +1,15 @@
+.vagrant
+*.swp
+*.swo
+.idea
+
+.bundle
+vendor/
+
+Gemfile.lock
+
+.rbenv*
+.rvmrc*
+.ruby-*
+
+modules/
