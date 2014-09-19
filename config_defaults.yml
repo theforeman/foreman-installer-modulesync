@@ -6,10 +6,12 @@ Gemfile:
     version: '>= 1'
   - gem: puppetlabs_spec_helper
     version: '>= 0.8.0'
+  - gem: puppet-lint
+    version: '>= 1'
   - gem: simplecov
-Rakefile:
+.puppet-lint.rc:
   default_disabled_lint_checks:
-  - 'disable_80chars'
-  - 'disable_class_inherits_from_params_class'
+  - '80chars'
+  - 'class_inherits_from_params_class'
 spec/spec_helper.rb:
   requires: []
