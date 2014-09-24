@@ -33,7 +33,6 @@ spec/fixtures/
 
 ## Puppet module
 pkg/
-/metadata.json
 coverage/
 <% if ! @configs['paths'].nil? -%>
 
