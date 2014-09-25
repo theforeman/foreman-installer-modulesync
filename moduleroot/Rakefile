@@ -7,4 +7,4 @@ require 'puppet-lint/tasks/puppet-lint'
 PuppetLint.configuration.ignore_paths = ["spec/**/*.pp", "pkg/**/*.pp", "vendor/**/*.pp"]
 PuppetLint.configuration.log_format = '%{path}:%{linenumber}:%{KIND}: %{message}'
 
-task :default => [:lint, :validate, :spec]
+task :default => [:validate, :lint, :spec]
