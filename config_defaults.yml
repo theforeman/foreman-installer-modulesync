@@ -9,6 +9,8 @@ Gemfile:
   - gem: puppet-lint
     version: '>= 1'
   - gem: simplecov
+  - gem: puppet-blacksmith
+    version: '>= 3.0.0'
 .puppet-lint.rc:
   default_disabled_lint_checks:
   - '80chars'
