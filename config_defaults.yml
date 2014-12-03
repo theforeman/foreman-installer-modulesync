@@ -3,7 +3,7 @@ Gemfile:
   required:
   - gem: rake
   - gem: rspec-puppet
-    version: '>= 1'
+    version: '~> 2.0'
   - gem: puppetlabs_spec_helper
     version: '>= 0.8.0'
   - gem: puppet-lint
