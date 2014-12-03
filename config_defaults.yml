@@ -11,6 +11,23 @@ Gemfile:
   - gem: simplecov
   - gem: puppet-blacksmith
     version: '>= 3.1.0'
+    options:
+      groups:
+      - 'development'
+  - gem: rest-client
+    version: '< 1.7'
+    options:
+      platforms:
+      - 'ruby_18'
+      groups:
+      - 'development'
+  - gem: mime-types
+    version: '~> 1.0'
+    options:
+      platforms:
+      - 'ruby_18'
+      groups:
+      - 'development'
 .puppet-lint.rc:
   default_disabled_lint_checks:
   - '80chars'
