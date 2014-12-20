@@ -28,6 +28,7 @@ Gemfile:
       - 'ruby_18'
       groups:
       - 'development'
+  - gem: rspec-puppet-facts
 .puppet-lint.rc:
   default_disabled_lint_checks:
   - '80chars'
