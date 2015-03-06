@@ -29,6 +29,7 @@ Gemfile:
       groups:
       - 'development'
   - gem: rspec-puppet-facts
+  - gem: metadata-json-lint
 .puppet-lint.rc:
   default_disabled_lint_checks:
   - '80chars'
