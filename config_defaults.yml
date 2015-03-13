@@ -39,6 +39,11 @@ Gemfile:
       - 'development'
   - gem: rspec-puppet-facts
   - gem: metadata-json-lint
+  - gem: rspec
+    version: '< 3.2.0'
+    options:
+      platforms:
+      - 'ruby_18'
 .puppet-lint.rc:
   default_disabled_lint_checks:
   - '80chars'
