@@ -34,6 +34,9 @@ spec/fixtures/
 ## Puppet module
 pkg/
 coverage/
+
+## InteliJ / RubyMine
+.idea
 <% if ! @configs['paths'].nil? -%>
 
 # Module-specific paths
