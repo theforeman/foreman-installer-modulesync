@@ -50,4 +50,20 @@ def verify_concat_fragment_exact_contents(subject, title, expected_lines)
   content = subject.resource('concat::fragment', title).send(:parameters)[:content]
     content.split(/\n/).reject { |line| line =~ /(^#|^$|^\s+#)/ }.should == expected_lines
 end
+
+# See https://github.com/rodjek/rspec-puppet/issues/215
+# Without this patch the @@cache variable grows huge and causes memory usage issues
+# with a large amount of examples.
+module RSpec::Puppet
+  module Support
+    def build_catalog(*args)
+      if @@cache.has_key?(args)
+        @@cache[args]
+      else
+        @@cache = {}
+        @@cache[args] ||= self.build_catalog_without_cache(*args)
+      end
+    end
+  end
+end
 <%= "\n" + @configs['extra_code'] if @configs['extra_code'] -%>
