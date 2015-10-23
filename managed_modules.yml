@@ -1,5 +1,4 @@
 ---
-- puppet-concat_native
 - puppet-dhcp
 - puppet-dns
 - puppet-foreman
