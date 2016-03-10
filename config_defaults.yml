@@ -1,7 +1,6 @@
 ---
 Gemfile:
   required:
-  - gem: rake
   - gem: rspec-puppet
     version: '~> 2.3'
   - gem: puppetlabs_spec_helper
