@@ -2,7 +2,9 @@
 - puppet-dhcp
 - puppet-dns
 - puppet-foreman
+- puppet-foreman_network
 - puppet-foreman_proxy
+- puppet-foreman_scap_client
 - puppet-git
 - puppet-puppet
 - puppet-tftp
