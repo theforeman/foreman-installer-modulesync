@@ -38,6 +38,14 @@ Gemfile:
       - 'ruby_18'
       groups:
       - 'development'
+  - gem: json
+    version: '~> 1.0'
+    options:
+      platforms:
+      - 'ruby_18'
+      - 'ruby_19'
+      groups:
+      - 'test'
   - gem: json_pure
     version: '~> 1.0'
     options:
