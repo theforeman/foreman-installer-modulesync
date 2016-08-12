@@ -6,7 +6,7 @@ Gemfile:
   - gem: puppetlabs_spec_helper
     version: '>= 0.8.0'
   - gem: puppet-lint
-    version: '>= 1'
+    version: '>= 2'
   - gem: puppet-lint-unquoted_string-check
   - gem: puppet-lint-empty_string-check
   - gem: puppet-lint-spaceship_operator_without_tag-check
@@ -57,7 +57,7 @@ Gemfile:
   - gem: metadata-json-lint
 .puppet-lint.rc:
   default_disabled_lint_checks:
-  - '80chars'
+  - '140chars'
   - 'class_inherits_from_params_class'
 spec/spec_helper.rb:
   requires: []
