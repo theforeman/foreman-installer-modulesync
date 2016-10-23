@@ -9,6 +9,10 @@ require '<%= r %>'
 require 'rspec-puppet-facts'
 include RspecPuppetFacts
 
+                                                    # Original fact sources:
+add_custom_fact :concat_basedir, '/tmp'             # puppetlabs-concat
+add_custom_fact :puppetversion, Puppet.version      # Facter, but excluded from rspec-puppet-facts
+
 # Workaround for no method in rspec-puppet to pass undef through :params
 class Undef
   def inspect; 'undef'; end

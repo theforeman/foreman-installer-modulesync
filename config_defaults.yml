@@ -7,7 +7,7 @@ Gemfile:
   - gem: rspec-puppet
     version: '~> 2.3'
   - gem: rspec-puppet-facts
-    version: '>= 1.5'
+    version: '>= 1.7'
   - gem: puppetlabs_spec_helper
     version: '>= 0.8.0'
   - gem: puppet-lint
