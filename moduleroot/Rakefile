@@ -32,4 +32,4 @@ KafoModuleLint::RakeTask.new do |config|
   config.pattern = <%= @configs['param_docs_pattern'].inspect %>
 end
 
-task :default => [:validate, :lint, :spec]
+task :default => [:release_checks]

@@ -9,7 +9,7 @@ Gemfile:
   - gem: rspec-puppet-facts
     version: '>= 1.7'
   - gem: puppetlabs_spec_helper
-    version: '= 2.1.0'
+    version: ">= 2.1.1"
   - gem: puppet-lint
     version: '>= 2'
   - gem: puppet-lint-unquoted_string-check
