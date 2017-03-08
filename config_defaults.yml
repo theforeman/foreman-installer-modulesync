@@ -43,6 +43,14 @@ Gemfile:
       - 'ruby_19'
       groups:
       - 'test'
+  - gem: 'beaker-rspec'
+    options:
+      groups:
+        - 'system_tests'
+  - gem: 'beaker-puppet_install_helper'
+    options:
+      groups:
+        - 'system_tests'
   - gem: metadata-json-lint
   - gem: kafo_module_lint
 .puppet-lint.rc:
@@ -53,5 +61,7 @@ Gemfile:
   beaker_sets: []
 spec/spec_helper.rb:
   requires: []
+spec/spec_helper_acceptance.rb:
+  modules: ['puppetlabs-stdlib']
 Rakefile:
   param_docs_pattern: []
