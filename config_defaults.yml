@@ -60,6 +60,7 @@ Gemfile:
         - 'system_tests'
   - gem: metadata-json-lint
   - gem: kafo_module_lint
+  - gem: rgen # until https://tickets.puppetlabs.com/browse/PDOC-168 is resolved
 .puppet-lint.rc:
   default_disabled_lint_checks:
   - '140chars'
