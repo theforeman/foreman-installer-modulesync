@@ -4,7 +4,6 @@
 source 'https://rubygems.org'
 
 gem 'puppet', ENV.key?('PUPPET_VERSION') ? "~> #{ENV['PUPPET_VERSION']}" : '>= 4.6'
-gem 'facter', ENV.key?('FACTER_VERSION') ? "~> #{ENV['FACTER_VERSION']}" : '~> 2.4.6'
 
 <% (@configs['required'] + (@configs['extra'] || [])).each do |gem| -%>
 gem '<%= gem['gem'] %>'<%= ", '#{gem['version']}'" if gem['version'] %><%= ", #{gem['options'].inspect}" if gem['options'] %>
