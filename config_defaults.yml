@@ -32,27 +32,6 @@ Gemfile:
     options:
       groups:
       - 'development'
-  - gem: json
-    version: '~> 1.0'
-    options:
-      platforms:
-      - 'ruby_19'
-      groups:
-      - 'test'
-  - gem: json_pure
-    version: '~> 1.0'
-    options:
-      platforms:
-      - 'ruby_19'
-      groups:
-      - 'test'
-  - gem: logging
-    version: '~> 2.1.0'
-    options:
-      platforms:
-      - 'ruby_19'
-      groups:
-      - 'test'
   - gem: 'beaker-rspec'
     options:
       groups:
