@@ -32,6 +32,11 @@ Gemfile:
     options:
       groups:
       - 'development'
+  - gem: 'beaker'
+    version: '>= 3.9.0'
+    options:
+      groups:
+        - 'system_tests'
   - gem: 'beaker-rspec'
     options:
       groups:
