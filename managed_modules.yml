@@ -1,8 +1,17 @@
 ---
+- puppet-candlepin
+- puppet-certs
+- puppet-common
 - puppet-dhcp
 - puppet-dns
 - puppet-foreman
 - puppet-foreman_proxy
+- puppet-foreman_proxy_content
 - puppet-git
+- puppet-katello
+- puppet-katello_devel
+- puppet-pulp
 - puppet-puppet
+- puppet-qpid
+- puppet-service_wait
 - puppet-tftp
