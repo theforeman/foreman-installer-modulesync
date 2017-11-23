@@ -1,26 +1,32 @@
 ---
 # This file is managed centrally by modulesync
 #   https://github.com/theforeman/foreman-installer-modulesync
+<% if @configs['test_all_rvms'] -%>
 rvm:
   - 2.1.9
-<% if @configs['test_all_rvms'] -%>
   - 2.2.6
   - 2.3.0
   - 2.4.1
-
-<% end -%>
 env:
+  matrix:
+    - PUPPET_VERSION=4.9
+<% end -%>
 <% if @configs['env'] && @configs['env']['global'] -%>
+<% unless @configs['test_all_rvms'] -%>
+env:
+<% end -%>
   global:
 <% @configs['env']['global'].each do |env| -%>
     - <%= env %>
 <% end -%>
 <% end -%>
-  matrix:
-    - PUPPET_VERSION=4.9
 matrix:
   fast_finish: true
   include:
+<% unless @configs['test_all_rvms'] -%>
+    - rvm: 2.1.9
+      env: PUPPET_VERSION=4.9
+<% end -%>
     - rvm: 2.4.1
       env: PUPPET_VERSION=5.0
 <% unless @configs['beaker_sets'].empty? -%>
