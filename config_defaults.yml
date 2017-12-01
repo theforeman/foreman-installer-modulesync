@@ -28,7 +28,7 @@ Gemfile:
   - gem: puppet-lint-version_comparison-check
   - gem: simplecov
   - gem: puppet-blacksmith
-    version: '>= 3.1.0'
+    version: '>= 4.1.0'
     options:
       groups:
       - 'development'
