@@ -5,10 +5,10 @@ Gemfile:
   - gem: rspec
     version: '~> 3.0'
   - gem: rdoc
-    version: '-> 5.1.0'
+    version: '~> 5.1.0'
     options:
       platforms:
-      - 'ruby_21'  
+      - 'ruby_21'
   - gem: rspec-puppet
     version: '~> 2.3'
   - gem: rspec-puppet-facts
