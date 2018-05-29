@@ -1,7 +1,6 @@
 ---
 - puppet-candlepin
 - puppet-certs
-- puppet-common
 - puppet-dhcp
 - puppet-dns
 - puppet-foreman
@@ -13,5 +12,4 @@
 - puppet-pulp
 - puppet-puppet
 - puppet-qpid
-- puppet-service_wait
 - puppet-tftp
