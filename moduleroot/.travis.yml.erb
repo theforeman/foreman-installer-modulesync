@@ -4,7 +4,6 @@
 <% if @configs['test_all_rvms'] -%>
 rvm:
   - 2.1.9
-  - 2.2.6
   - 2.3.0
   - 2.4.1
 env:
@@ -29,6 +28,10 @@ matrix:
 <% end -%>
     - rvm: 2.4.1
       env: PUPPET_VERSION=5.0
+<% if @configs['test_all_rvms'] -%>
+    - rvm: 2.5.1
+      env: PUPPET_VERSION=5.0
+<% end -%>
 <% unless @configs['beaker_sets'].empty? -%>
     # Acceptance tests
 <% @configs['beaker_sets'].each do |set| -%>
