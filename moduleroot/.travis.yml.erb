@@ -37,7 +37,7 @@ matrix:
 <% @configs['beaker_sets'].each do |set| -%>
     - rvm: 2.3.1
       dist: trusty
-      env: PUPPET_INSTALL_TYPE=agent BEAKER_debug=true BEAKER_set=<%= set %>
+      env: PUPPET_INSTALL_TYPE=agent BEAKER_debug=true BEAKER_setfile=<%= set %>{hypervisor=docker\,hostname=<%= set %>.example.com}
       script: bundle exec rake beaker
       services: docker
       bundler_args: --without development
