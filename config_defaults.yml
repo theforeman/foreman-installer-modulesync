@@ -70,6 +70,7 @@ Gemfile:
 .travis.yml:
   beaker_sets: []
   test_all_rvms: true
+  beaker_puppet_collection: puppet5
 spec/spec_helper.rb:
   requires: []
 spec/spec_helper_acceptance.rb:
