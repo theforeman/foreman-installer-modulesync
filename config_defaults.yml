@@ -85,6 +85,7 @@ Gemfile:
     - puppet5
     - puppet6
   beaker_sets: []
+  puppetforge_username: theforeman
   test_all_rvms: true
 spec/spec_helper.rb:
   custom_facts: []

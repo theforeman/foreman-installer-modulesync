@@ -54,3 +54,14 @@ matrix:
 <% end -%>
 bundler_args: --without system_tests development
 sudo: false
+<% if @configs['puppetforge_password'] -%>
+deploy:
+  provider: puppetforge
+  user: <%= @configs['puppetforge_username'] %>
+  password:
+    secure: "<%= @configs['puppetforge_password'] %>"
+  on:
+    tags: true
+    rvm: 2.4.1
+    condition: PUPPET_VERSION=5.0
+<% end -%>
