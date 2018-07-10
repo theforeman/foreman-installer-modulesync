@@ -32,6 +32,12 @@ Gemfile:
   - gem: puppet-lint-variable_contains_upcase
   - gem: puppet-lint-version_comparison-check
   - gem: simplecov
+  - gem: github_changelog_generator
+    options:
+      git: 'https://github.com/skywinder/github-changelog-generator'
+      ref: '20ee04ba1234e9e83eb2ffb5056e23d641c7a018'
+      groups:
+      - 'development'
   - gem: puppet-blacksmith
     version: '>= 4.1.0'
     options:
