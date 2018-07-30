@@ -79,6 +79,7 @@ Gemfile:
   beaker_puppet_collection: puppet5
 spec/spec_helper.rb:
   requires: []
+  custom_facts: []
 spec/spec_helper_acceptance.rb:
   modules: []
   install_epel: false
