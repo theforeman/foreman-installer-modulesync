@@ -17,7 +17,6 @@ Gemfile:
     version: ">= 2.1.1"
   - gem: puppet-lint
     version: '>= 2'
-  - gem: puppet-lint-absolute_classname-check
   - gem: puppet-lint-classes_and_types_beginning_with_digits-check
   - gem: puppet-lint-empty_string-check
   - gem: puppet-lint-file_ensure-check
