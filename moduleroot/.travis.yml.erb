@@ -32,15 +32,19 @@ matrix:
     - rvm: 2.5.1
       env: PUPPET_VERSION=5.0
 <% end -%>
+    - rvm: 2.5.1
+      env: PUPPET_VERSION=6.0
 <% unless @configs['beaker_sets'].empty? -%>
     # Acceptance tests
 <% @configs['beaker_sets'].each do |set| -%>
+<% @configs['beaker_puppet_collections'].each do |collection| -%>
     - rvm: 2.5.1
       dist: trusty
-      env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_PUPPET_COLLECTION=<%= @configs['beaker_puppet_collection'] %> BEAKER_debug=true BEAKER_setfile=<%= set %>{hypervisor=docker\,hostname=<%= set %>.example.com}
+      env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_PUPPET_COLLECTION=<%= collection %> BEAKER_debug=true BEAKER_setfile=<%= set %>{hypervisor=docker\,hostname=<%= set %>.example.com}
       script: bundle exec rake beaker
       services: docker
       bundler_args: --without development
+<% end -%>
 <% end -%>
 <% end -%>
 bundler_args: --without system_tests development
