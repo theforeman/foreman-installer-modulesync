@@ -84,7 +84,9 @@ Gemfile:
 .travis.yml:
   beaker_sets: []
   test_all_rvms: true
-  beaker_puppet_collection: puppet5
+  beaker_puppet_collections:
+    - puppet5
+    - puppet6
 spec/spec_helper.rb:
   requires: []
   custom_facts: []
