@@ -6,7 +6,7 @@ source 'https://rubygems.org'
 gem 'puppet', ENV.key?('PUPPET_VERSION') ? "~> #{ENV['PUPPET_VERSION']}" : '>= 4.6'
 
 <% (@configs['required'] + (@configs['extra'] || [])).each do |gem| -%>
-gem '<%= gem['gem'] %>'<%= ", '#{gem['version']}'" if gem['version'] %><%= ", #{gem['options'].inspect}" if gem['options'] %>
+gem '<%= gem['gem'] %>'<%= ", '#{gem['version']}'" if gem['version'] %><%= ", #{gem['options'].inspect}" if gem['options'] %><%= " if RUBY_VERSION #{gem['ruby_version']}" if (gem['ruby_version']) %>
 <% end -%>
 
 # vim:ft=ruby
