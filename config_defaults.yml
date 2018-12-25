@@ -44,7 +44,7 @@ Gemfile:
       groups:
       - 'development'
   - gem: 'beaker'
-    version: '>= 4.0.0'
+    version: '>= 4.2.0'
     options:
       groups:
         - 'system_tests'
