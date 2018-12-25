@@ -35,15 +35,13 @@ Gemfile:
     options:
       git: 'https://github.com/skywinder/github-changelog-generator'
       ref: '20ee04ba1234e9e83eb2ffb5056e23d641c7a018'
-      ruby-operator: '>='
-      ruby-version: '2.2.2'
       groups:
-      - 'development'
+      - 'release'
   - gem: puppet-blacksmith
     version: '>= 4.1.0'
     options:
       groups:
-      - 'development'
+      - 'release'
   - gem: 'beaker'
     version: '>= 4.0.0'
     options:
