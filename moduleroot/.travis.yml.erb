@@ -45,6 +45,10 @@ matrix:
       script: bundle exec rake beaker
       services: docker
       bundler_args: --without development
+      before_install:
+        - echo '{"ipv6":true,"fixed-cidr-v6":"2001:db8:1::/64"}' | sudo tee /etc/docker/daemon.json
+        - sudo service docker restart
+
 <% end -%>
 <% end -%>
 <% end -%>
