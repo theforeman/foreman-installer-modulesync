@@ -1,19 +1,8 @@
 ---
 # This file is managed centrally by modulesync
 #   https://github.com/theforeman/foreman-installer-modulesync
-<% if @configs['test_all_rvms'] -%>
-rvm:
-  - 2.1.9
-  - 2.3.0
-  - 2.4.1
-env:
-  matrix:
-    - PUPPET_VERSION=4.9
-<% end -%>
 <% if @configs['env'] && @configs['env']['global'] -%>
-<% unless @configs['test_all_rvms'] -%>
 env:
-<% end -%>
   global:
 <% @configs['env']['global'].each do |env| -%>
     - <%= env %>
@@ -22,16 +11,8 @@ env:
 matrix:
   fast_finish: true
   include:
-<% unless @configs['test_all_rvms'] -%>
-    - rvm: 2.1.9
-      env: PUPPET_VERSION=4.9
-<% end -%>
     - rvm: 2.4.1
       env: PUPPET_VERSION=5.0
-<% if @configs['test_all_rvms'] -%>
-    - rvm: 2.5.1
-      env: PUPPET_VERSION=5.0
-<% end -%>
     - rvm: 2.5.1
       env: PUPPET_VERSION=6.0
 <% unless @configs['beaker_sets'].empty? -%>
@@ -53,8 +34,4 @@ matrix:
 <% end -%>
 <% end -%>
 bundler_args: --without system_tests development
-before_install:
-  - if [ $TRAVIS_RUBY_VERSION = 2.1.9 ] ; then
-      gem install -v 1.17.3 bundler --no-rdoc --no-ri;
-    fi
-sudo: false
+dist: xenial
