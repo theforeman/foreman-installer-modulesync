@@ -13,6 +13,11 @@ require 'beaker/module_install_helper'
 run_puppet_install_helper unless ENV['BEAKER_provision'] == 'no'
 install_module_on(hosts)
 install_module_dependencies_on(hosts)
+<%- if @configs['modules'].any? -%>
+<%- @configs['modules'].inspect %>.each do |mod|
+install_module_from_forge(mod, '>= 0')
+end
+<%- end -%>
 
 RSpec.configure do |c|
   # Readable test descriptions
@@ -22,12 +27,6 @@ RSpec.configure do |c|
   c.before :suite do
     # Install module and dependencies
     hosts.each do |host|
-      <%- if @configs['modules'].any? -%>
-      <%= @configs['modules'].inspect %>.each do |mod|
-        install_module_from_forge(mod, '>= 0')
-      end
-
-      <%- end -%>
       if fact_on(host, 'osfamily') == 'RedHat'
         # don't delete downloaded rpm for use with BEAKER_provision=no +
         # BEAKER_destroy=no
