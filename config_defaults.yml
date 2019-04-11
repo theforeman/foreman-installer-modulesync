@@ -82,7 +82,6 @@ Gemfile:
   - 'class_inherits_from_params_class'
 .travis.yml:
   beaker_sets: []
-  test_all_rvms: true
   beaker_puppet_collections:
     - puppet5
     - puppet6
