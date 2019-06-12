@@ -1,0 +1,81 @@
+#!/usr/bin/env python3
+
+# Requires Python 3.7 for dataclasses
+
+import argparse
+import json
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import AbstractSet, Optional, Sequence, Set
+
+
+@dataclass(eq=True, frozen=True, order=True)
+class Module:
+    author: str
+    name: str
+    dependencies: AbstractSet = field(compare=False)
+    directory: Optional[Path] = field(default=None, compare=False)
+
+    def __str__(self):
+        return f'{self.author}/{self.name}'
+
+
+def get_module(module, dependencies: Optional[AbstractSet] = None,
+               directory: Optional[Path] = None) -> Module:
+    full_name = module.replace('-', '/', 1).lower()
+    author, name = full_name.split('/', 1)
+    if dependencies is None:
+        dependencies = set()
+    return Module(author=author, name=name, dependencies=dependencies, directory=directory)
+
+
+def handle_metadata(metadata) -> Module:
+    data = json.load(metadata)
+    directory = Path(metadata.name).parent
+
+    dependencies = {get_module(dependency['name']) for dependency in data.get('dependencies', [])}
+    return get_module(data['name'], dependencies, directory)
+
+
+def get_tiers(metadata) -> Sequence[AbstractSet[Module]]:
+    modules = {handle_metadata(data) for data in metadata}
+    authors = {module.author for module in modules}
+    todo = {mod: {dep for dep in mod.dependencies if dep.author in authors} for mod in modules}
+    handled: Set[Module] = set()
+    tiers = []
+
+    while todo:
+        tier = {module for module, dependencies in todo.items() if dependencies <= handled}
+        if not tier:
+            raise SystemExit(f'Cycle detected: could not resolve {", ".join(str(mod) for mod in modules)}')
+        for module in tier:
+            del todo[module]
+        tiers.append(tier)
+        handled.update(tier)
+
+    return tiers
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--tier', nargs='?', type=int)
+    parser.add_argument('metadata', nargs='+', type=argparse.FileType('r'))
+
+    args = parser.parse_args()
+
+    tiers = get_tiers(args.metadata)
+
+    if args.tier is not None:
+        for tier, modules in enumerate(tiers):
+            if args.tier == tier:
+                for module in sorted(modules):
+                    print(f'{module}\t{module.directory}')
+    else:
+        for tier, modules in enumerate(tiers):
+            print(f'Tier {tier}')
+            for module in sorted(modules):
+                print(f'  {module}\t{module.directory}')
+
+
+if __name__ == '__main__':
+    main()

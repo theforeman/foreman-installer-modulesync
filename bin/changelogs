@@ -1,0 +1,138 @@
+#!/usr/bin/env python3
+
+from collections import ChainMap
+import argparse
+import asyncio
+import logging
+import os
+import typing
+from pathlib import Path
+from subprocess import CalledProcessError
+
+TOKEN_ENV_VAR = 'CHANGELOG_GITHUB_TOKEN'
+CONCURRENT_CHANGELOGS = 1
+CONCURRENT_GIT = 5
+CONCURRENT_BUNDLER = 5
+BUNDLER_JOBS = 5
+BUNDLER_RETRY = 5
+PUPPET_VERSION = '5.0'
+
+
+async def check_output(cmd: typing.Sequence[str], path: os.PathLike, env=None) -> str:
+    if env is None:
+        env = {}
+
+    logging.debug('Running command %r in %s', cmd, path)
+    proc = await asyncio.create_subprocess_exec(
+        *cmd,
+        cwd=path,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE,
+        env=ChainMap(env, os.environ),
+    )
+
+    stdout, stderr = await proc.communicate()
+    stdout = stdout.decode('utf-8')
+    stderr = stderr.decode('utf-8')
+    logging.debug('Completed command %r in %s', cmd, path)
+
+    if proc.returncode != 0:
+        logging.error('Failed to run %r in %s', cmd, path)
+        if stdout:
+            logging.info(stdout)
+        if stderr:
+            logging.info(stderr)
+        raise CalledProcessError(proc.returncode, cmd, stdout, stderr)
+
+    return stdout
+
+
+async def get_changelog_token(key='github/changelog') -> str:
+    try:
+        return os.environ[TOKEN_ENV_VAR]
+    except KeyError:
+        logging.debug('Getting changelog token from %s', key)
+        cmd = ['pass', 'show', key]
+        return await check_output(cmd, path=os.getcwd())
+
+
+async def update_checkout(module: Path, semaphore: asyncio.Semaphore) -> None:
+    cmds = [
+        ['git', 'reset', '--hard'],
+        ['git', 'clean', '-dxf'],
+        ['git', 'checkout', 'master'],
+    ]
+    for cmd in cmds:
+        await check_output(cmd, path=module)
+
+    async with semaphore:
+        await check_output(['git', 'pull'], path=module)
+
+
+async def bundle_update(module: Path, semaphore: asyncio.Semaphore) -> None:
+    cmd = ['bundle', 'update', '--jobs', str(BUNDLER_JOBS), '--retry', str(BUNDLER_RETRY)]
+    env = {'PUPPET_VERSION': PUPPET_VERSION}
+    async with semaphore:
+        await check_output(cmd, env=env, path=module)
+
+
+async def generate_changelog(module: Path, token: str, semaphore: asyncio.Semaphore) -> str:
+    cmd = ['bundle', 'exec', 'rake', 'changelog']
+    env = {TOKEN_ENV_VAR: token}
+    async with semaphore:
+        return await check_output(cmd, env=env, path=module)
+
+
+async def handle_module(module: Path, token: str, skip_git: bool,  # pylint: disable=too-many-arguments
+                        git_semaphore: asyncio.Semaphore,
+                        bundler_semaphore: asyncio.Semaphore,
+                        github_semaphore: asyncio.Semaphore) -> str:
+
+    if not skip_git:
+        await update_checkout(module, git_semaphore)
+    await bundle_update(module, bundler_semaphore)
+    await generate_changelog(module, token, github_semaphore)
+    logging.info('Updated %s', module / 'CHANGELOG.md')
+    return module / 'CHANGELOG.md'
+
+
+def valid_module(module: Path):
+    return (module / '.git').exists() and (module / 'CHANGELOG.md').exists()
+
+
+async def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--skip-git', action='store_true')
+    parser.add_argument('module', nargs='+', type=Path)
+
+    args = parser.parse_args()
+    logging.basicConfig(level=logging.WARNING)
+
+    modules = [module.absolute() for module in args.module if valid_module(module)]
+
+    if modules:
+        git_semaphore = asyncio.Semaphore(CONCURRENT_GIT)
+        github_semaphore = asyncio.Semaphore(CONCURRENT_CHANGELOGS)
+        bundler_semaphore = asyncio.Semaphore(CONCURRENT_BUNDLER)
+
+        token = await get_changelog_token()
+
+        tasks = [handle_module(module, token, args.skip_git, git_semaphore, bundler_semaphore,
+                               github_semaphore)
+                 for module in modules]
+
+        for changelog in asyncio.as_completed(tasks):
+            try:
+                path = await changelog
+            except CalledProcessError as exc:
+                print('Failed to update changelog')
+                if exc.stdout:
+                    print(exc.stdout)
+                if exc.stderr:
+                    print(exc.stderr)
+            else:
+                print('Updated', path.as_posix())
+
+
+if __name__ == '__main__':
+    asyncio.run(main())

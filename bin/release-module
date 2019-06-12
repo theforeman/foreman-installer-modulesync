@@ -1,0 +1,19 @@
+#!/bin/bash -e
+
+if [[ -n $1 ]] ; then
+	cd "$1"
+fi
+
+VERSION="$(bundle exec rake module:version)"
+
+bundle exec rake module:tag
+git verify-tag "$VERSION"
+git push --follow-tags
+
+rm -f REFERENCE.md
+if basename $PWD | grep -E -q '^puppet-(candlepin|dns|dhcp|git|pulp|qpid|tftp|foreman_simple_user)$' ; then
+	bundle exec rake strings:generate:reference
+fi
+
+export BLACKSMITH_FORGE_USERNAME="$(jq -r .author metadata.json | tr [A-Z] [a-z])"
+BLACKSMITH_FORGE_PASSWORD="$(pass show $BLACKSMITH_FORGE_USERNAME/forge | head -n 1)" bundle exec rake module:clean module:push

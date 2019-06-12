@@ -1,0 +1,19 @@
+#!/bin/bash -e
+
+if [[ -n $1 ]] ; then
+	cd "$1"
+fi
+
+if [[ ! -f CHANGELOG.md ]] ; then
+	echo "Usage: $0 MODULE"
+	exit 1
+fi
+
+VERSION="$(bundle exec rake module:version)"
+
+git checkout -b "release-$VERSION"
+git add HISTORY.md CHANGELOG.md metadata.json
+git commit -m "Release $VERSION"
+
+addfork || true
+git phr -m "Release $VERSION"
