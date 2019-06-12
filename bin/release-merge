@@ -1,0 +1,25 @@
+#!/bin/bash -e
+
+directory=$(dirname $(realpath $0))
+
+if [[ -n $1 ]] ; then
+	cd "$1"
+fi
+
+if [[ ! -f CHANGELOG.md ]] ; then
+	echo "Usage: $0 MODULE"
+	exit 1
+fi
+
+BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+
+if [[ $BRANCH != release-* ]] ; then
+	echo "Must be on a release branch"
+	exit 2
+fi
+
+git checkout master
+git pull
+git merge --ff-only "$BRANCH"
+
+"$directory"/release-module
