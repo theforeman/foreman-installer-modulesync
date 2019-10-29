@@ -10,6 +10,7 @@
 - puppet-katello
 - puppet-katello_devel
 - puppet-pulp
+- puppet-pulpcore
 - puppet-puppet
 - puppet-qpid
 - puppet-tftp
