@@ -4,11 +4,6 @@ Gemfile:
   - gem: rake
   - gem: rspec
     version: '~> 3.0'
-  - gem: rdoc
-    version: '~> 5.1.0'
-    options:
-      platforms:
-      - 'ruby_21'
   - gem: rspec-puppet
     version: '~> 2.3'
   - gem: rspec-puppet-facts
@@ -32,12 +27,7 @@ Gemfile:
   - gem: puppet-lint-version_comparison-check
   - gem: simplecov
   - gem: github_changelog_generator
-    options:
-      git: 'https://github.com/skywinder/github-changelog-generator'
-      ref: '20ee04ba1234e9e83eb2ffb5056e23d641c7a018'
-      groups:
-      - 'development'
-    ruby_version: ">= '2.2.2'"
+    version: '>= 1.15.0'
   - gem: puppet-blacksmith
     version: '>= 4.1.0'
     options:
