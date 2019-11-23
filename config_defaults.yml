@@ -28,6 +28,9 @@ Gemfile:
   - gem: simplecov
   - gem: github_changelog_generator
     version: '>= 1.15.0'
+    options:
+      groups:
+      - 'development'
   - gem: puppet-blacksmith
     version: '>= 4.1.0'
     options:
