@@ -1,0 +1,54 @@
+<%- if Dir[File.join(@metadata[:workdir], 'spec', 'acceptance', '**', '*_spec.rb')].any? -%>
+name: Acceptance tests
+
+on:
+  - pull_request
+  - push
+
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        setfile:
+          <%- require 'puppet_metadata' -%>
+          <%- metadata_file = File.join(@metadata[:workdir], 'metadata.json') -%>
+          <%- PuppetMetadata.read(metadata_file).beaker_setfiles(use_fqdn: true, pidfile_workaround: @configs['pidfile_workaround']) do |setfile| -%>
+          - <%= setfile %>
+          <%- end -%>
+        puppet:
+          - "6"
+          - "5"
+    name: Puppet ${{ matrix.puppet }} - ${{ matrix.setfile }}
+    steps:
+      - name: Enable IPv6 on docker
+        run: |
+          echo '{"ipv6":true,"fixed-cidr-v6":"2001:db8:1::/64"}' | sudo tee /etc/docker/daemon.json
+          sudo service docker restart
+      - uses: actions/checkout@v2
+      - name: Setup ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: "2.7"
+      - uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-2.7-gems-acceptance-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-2.7-gems-acceptance-
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle config path vendor/bundle
+          bundle config without 'development test'
+          bundle install --jobs 4 --retry 3
+      - name: Run tests
+        run: bundle exec rake beaker
+        env:
+          BEAKER_PUPPET_COLLECTION: puppet${{ matrix.puppet }}
+          BEAKER_setfile: ${{ matrix.setfile }}
+<%- else -%>
+# This module contains no acceptance tests - this is a placeholder for
+# modulesync.
+<%- end -%>

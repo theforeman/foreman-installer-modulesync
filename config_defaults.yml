@@ -2,13 +2,34 @@
 Gemfile:
   required:
   - gem: kafo_module_lint
+    options:
+      groups:
+      - 'test'
   - gem: puppet-lint-empty_string-check
+    options:
+      groups:
+      - 'test'
   - gem: puppet-lint-file_ensure-check
+    options:
+      groups:
+      - 'test'
   - gem: puppet-lint-param-docs
     version: '>= 1.3.0'
+    options:
+      groups:
+      - 'test'
   - gem: puppet-lint-spaceship_operator_without_tag-check
+    options:
+      groups:
+      - 'test'
   - gem: puppet-lint-strict_indent-check
+    options:
+      groups:
+      - 'test'
   - gem: puppet-lint-undef_in_function-check
+    options:
+      groups:
+      - 'test'
   - gem: voxpupuli-test
     version: '~> 1.4'
   - gem: github_changelog_generator
@@ -31,10 +52,11 @@ Gemfile:
   - '140chars'
   - 'class_inherits_from_params_class'
 .travis.yml:
-  beaker_sets: []
-  beaker_puppet_collections:
-    - puppet5
-    - puppet6
+  delete: true
+.github/workflows/acceptance.yml:
+  pidfile_workaround: false
+.github/workflows/cron.yml:
+  pidfile_workaround: false
 spec/spec_helper.rb:
   requires: []
   custom_facts: []
