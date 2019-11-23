@@ -45,6 +45,10 @@ Gemfile:
     options:
       groups:
         - 'system_tests'
+  - gem: 'beaker-vagrant'
+    options:
+      groups:
+        - 'system_tests'
   - gem: 'beaker-hostgenerator'
     version: '>= 1.1.10'
     options:
