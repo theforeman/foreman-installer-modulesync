@@ -6,6 +6,8 @@ if [[ -n $1 ]] ; then
 	cd "$1"
 fi
 
+TARGET_BRANCH=${2:-master}
+
 if [[ ! -f CHANGELOG.md ]] ; then
 	echo "Usage: $0 MODULE"
 	exit 1
@@ -18,7 +20,7 @@ if [[ $BRANCH != release-* ]] ; then
 	exit 2
 fi
 
-git checkout master
+git checkout "$TARGET_BRANCH"
 git pull
 git merge --ff-only "$BRANCH"
 

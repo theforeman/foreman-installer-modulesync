@@ -4,6 +4,8 @@ if [[ -n $1 ]] ; then
 	cd "$1"
 fi
 
+TARGET_BRANCH="${2:-master}"
+
 if [[ ! -f CHANGELOG.md ]] ; then
 	echo "Usage: $0 MODULE"
 	exit 1
@@ -16,4 +18,4 @@ git add HISTORY.md CHANGELOG.md metadata.json
 git commit -m "Release $VERSION"
 
 addfork || true
-git phr -m "Release $VERSION"
+git phr -m "Release $VERSION" -b "$TARGET_BRANCH"
