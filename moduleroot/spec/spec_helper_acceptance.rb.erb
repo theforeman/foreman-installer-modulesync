@@ -37,6 +37,11 @@ RSpec.configure do |c|
         # We always need EPEL
         on host, puppet('resource', 'package', 'epel-release', 'ensure=installed')
         <%- end -%>
+        major = fact_on(host, 'os.release.major')
+        # this is absent in the el8 container images used for testing
+        if major == '8'
+          on host, puppet('resource', 'package', 'glibc-langpack-en', 'ensure=installed')
+        end
       end
     end
   end
