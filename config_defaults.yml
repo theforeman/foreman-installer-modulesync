@@ -36,37 +36,8 @@ Gemfile:
     options:
       groups:
       - 'development'
-  - gem: 'beaker'
-    version: '>= 4.2.0'
-    options:
-      groups:
-        - 'system_tests'
-  - gem: 'beaker-docker'
-    options:
-      groups:
-        - 'system_tests'
-  - gem: 'beaker-vagrant'
-    options:
-      groups:
-        - 'system_tests'
-  - gem: 'beaker-hostgenerator'
-    version: '>= 1.1.10'
-    options:
-      groups:
-        - 'system_tests'
-  - gem: 'beaker-puppet'
-    options:
-      groups:
-        - 'system_tests'
-  - gem: 'beaker-rspec'
-    options:
-      groups:
-        - 'system_tests'
-  - gem: 'beaker-module_install_helper'
-    options:
-      groups:
-        - 'system_tests'
-  - gem: 'beaker-puppet_install_helper'
+  - gem: 'voxpupuli-acceptance'
+    version: '~> 0.1'
     options:
       groups:
         - 'system_tests'
@@ -86,7 +57,6 @@ spec/spec_helper.rb:
   requires: []
   custom_facts: []
 spec/spec_helper_acceptance.rb:
-  modules: []
   install_epel: false
 Rakefile:
   param_docs_pattern: []
