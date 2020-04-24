@@ -15,7 +15,6 @@ CONCURRENT_GIT = 5
 CONCURRENT_BUNDLER = 5
 BUNDLER_JOBS = 5
 BUNDLER_RETRY = 5
-PUPPET_VERSION = '5.0'
 
 
 async def check_output(cmd: typing.Sequence[str], path: os.PathLike, env=None) -> str:
@@ -71,9 +70,8 @@ async def update_checkout(module: Path, semaphore: asyncio.Semaphore) -> None:
 
 async def bundle_update(module: Path, semaphore: asyncio.Semaphore) -> None:
     cmd = ['bundle', 'update', '--jobs', str(BUNDLER_JOBS), '--retry', str(BUNDLER_RETRY)]
-    env = {'PUPPET_VERSION': PUPPET_VERSION}
     async with semaphore:
-        await check_output(cmd, env=env, path=module)
+        await check_output(cmd, path=module)
 
 
 async def generate_changelog(module: Path, token: str, semaphore: asyncio.Semaphore) -> str:
