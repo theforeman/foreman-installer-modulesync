@@ -13,5 +13,6 @@
 - puppet-pulp
 - puppet-pulpcore
 - puppet-puppet
+- puppet-puppetserver_foreman
 - puppet-qpid
 - puppet-tftp
