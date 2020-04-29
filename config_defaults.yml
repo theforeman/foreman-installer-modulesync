@@ -22,7 +22,7 @@ Gemfile:
       groups:
       - 'development'
   - gem: 'voxpupuli-acceptance'
-    version: '~> 0.1'
+    version: '~> 0.2'
     options:
       groups:
         - 'system_tests'
