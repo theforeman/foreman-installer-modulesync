@@ -15,14 +15,15 @@ matrix:
       env: PUPPET_VERSION=5.0
     - rvm: 2.5.1
       env: PUPPET_VERSION=6.0
-<% unless @configs['beaker_sets'].empty? -%>
+<% if Dir[File.join(@metadata[:workdir], 'spec', 'acceptance', '*.rb')].any? -%>
     # Acceptance tests
-<% @configs['beaker_sets'].each do |set| -%>
+<% require_relative '../metadata2beaker' -%>
+<% metadata2beaker(@metadata[:workdir], pidfile: @configs['pidfile_workaround']) do |setfile| -%>
 <% @configs['beaker_puppet_collections'].each do |collection| -%>
     - rvm: 2.5.1
       env:
         - BEAKER_PUPPET_COLLECTION=<%= collection %>
-        - BEAKER_setfile=<%= set %>{hostname=<%= set %>.example.com}
+        - BEAKER_setfile=<%= setfile %>
       script: bundle exec rake beaker
       services: docker
       bundler_args: --without development

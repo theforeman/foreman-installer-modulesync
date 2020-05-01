@@ -31,10 +31,10 @@ Gemfile:
   - '140chars'
   - 'class_inherits_from_params_class'
 .travis.yml:
-  beaker_sets: []
   beaker_puppet_collections:
     - puppet5
     - puppet6
+  pidfile_workaround: false
 spec/spec_helper.rb:
   requires: []
   custom_facts: []

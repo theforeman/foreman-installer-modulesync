@@ -1,3 +1,3 @@
 source 'https://rubygems.org'
 
-gem 'modulesync', '~> 1.0'
+gem 'modulesync', '~> 1.1'
