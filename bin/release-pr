@@ -21,4 +21,4 @@ fi
 git commit --message "Release $VERSION"
 
 addfork || true
-git phr --message "Release $VERSION" --base "$TARGET_BRANCH"
+git phr --message "Release $VERSION" --base "$TARGET_BRANCH" --labels skip-changelog
