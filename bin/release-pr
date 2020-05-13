@@ -13,12 +13,12 @@ fi
 
 VERSION="$(bundle exec rake module:version)"
 
-git checkout -b "release-$VERSION"
+git checkout --branch "release-$VERSION"
 git add CHANGELOG.md metadata.json
 if [[ -f HISTORY.md ]] ; then
 	git add HISTORY.md
 fi
-git commit -m "Release $VERSION"
+git commit --message "Release $VERSION"
 
 addfork || true
-git phr -m "Release $VERSION" -b "$TARGET_BRANCH"
+git phr --message "Release $VERSION" --base "$TARGET_BRANCH"
