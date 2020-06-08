@@ -10,6 +10,14 @@ README](https://github.com/puppetlabs/modulesync).
 
 ## Releasing
 
+### Setup
+
+Ensure that a GPG key is configured for signing:
+
+```
+git config --global user.signingkey <YOUR_PUB_KEY>
+```
+
 ### Short Single Release Workflow
 
 Generate a changelog
