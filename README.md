@@ -15,7 +15,7 @@ README](https://github.com/puppetlabs/modulesync).
 Ensure Git knows which GPG key to use for signing. You can set the key globally with:
 
 ```
-git config --global user.signingkey <YOUR_PUB_KEY>
+git config --global user.signingkey <YOUR_KEYID>
 ```
 
 ### Short Single Release Workflow
