@@ -60,6 +60,26 @@ If someone already merged it but didn't release it, then it can be released:
 $ ../../bin/release-module
 ```
 
+### Stable releases
+
+All the release scripts assume they're releasing to master. For a stable release, additional parameters are needed. All of the above scripts accept parameters. The first is the directory where to execute.
+
+To create a release PR for the current directory to the 11.1-stable branch, first get your working directory set up correctly. This means that git should point to the correct code and `CHANGELOG.md` is prepared. Bundler should also have all gems installs. In the regular workflow, the `changelogs` command does this, but [Github Changelog Generator](https://github.com/github-changelog-generator/github-changelog-generator) doesn't really support non-linear releases (with branches) so in practice it's easier to do so by hand.
+
+Once all the code is prepared, a PR should be submitted:
+
+```console
+$ ../../bin/release-pr . 11.1-stable
+```
+
+Once approved, merging also accepts the same arguments:
+
+```console
+$ ../../bin/release-merge . 11.1-stable
+```
+
+`release-module` performs no git operations and behaves the same regardless of stable/master. `release-merge` already calls it so it's not documented here.
+
 ### Short Bulk Release Workflow
 
 This repository also contains scripts to easy module releases. This short workflow:
