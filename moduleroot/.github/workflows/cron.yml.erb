@@ -47,8 +47,35 @@ jobs:
         run: bundle exec rake
 <%- if Dir[File.join(@metadata[:workdir], 'spec', 'acceptance', '**', '*_spec.rb')].any? -%>
 
+  build_cache:
+    if: github.repository == '<%= @configs[:namespace] %>/<%= @configs[:puppet_module] %>'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enable IPv6 on docker
+        run: |
+          echo '{"ipv6":true,"fixed-cidr-v6":"2001:db8:1::/64"}' | sudo tee /etc/docker/daemon.json
+          sudo service docker restart
+      - uses: actions/checkout@v2
+      - name: Setup ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: "2.7"
+      - uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-2.7-gems-acceptance-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-2.7-gems-acceptance-
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle config path vendor/bundle
+          bundle config without 'development test'
+          bundle install --jobs 4 --retry 3
+
   acceptance:
     if: github.repository == '<%= @configs[:namespace] %>/<%= @configs[:puppet_module] %>'
+    needs: build_cache
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
