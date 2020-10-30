@@ -16,4 +16,4 @@ if basename $PWD | grep -E -q '^puppet-(candlepin|dns|dhcp|git|pulp|pulpcore|mot
 fi
 
 export BLACKSMITH_FORGE_USERNAME="$(jq -r .author metadata.json | tr [A-Z] [a-z])"
-BLACKSMITH_FORGE_PASSWORD="$(pass show $BLACKSMITH_FORGE_USERNAME/forge | head -n 1)" bundle exec rake module:clean module:push
+BLACKSMITH_FORGE_PASSWORD="$(gopass show theforeman/shared/forge.puppet.com/$BLACKSMITH_FORGE_USERNAME | head -n 1)" bundle exec rake module:clean module:push
