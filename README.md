@@ -8,6 +8,17 @@ across all of the Foreman installer modules.
 A full description of ModuleSync can be found in [ModuleSync's
 README](https://github.com/puppetlabs/modulesync).
 
+## Applying Updates
+
+To initialize the modules for updates, use modulesync's update feature with noop:
+
+```
+bundle exec msync update --noop
+```
+
+This will clone all modules into `modules/` and apply any pending updates. Changes can then be inspected and pull requests
+opened to get the changes committed across the set of managed modules.
+
 ## Releasing
 
 ### Setup
