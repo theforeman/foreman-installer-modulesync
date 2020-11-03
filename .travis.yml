@@ -1,7 +1,0 @@
----
-# This tests the modulesync configuration _itself_.
-# The config used for modules is at moduleroot/.travis.yml
-rvm: 2.7
-# Use anonymous, read-only interface to clone
-before_script: "echo 'git_base: https://github.com/' >> modulesync.yml"
-script: msync update -n theforeman --noop
