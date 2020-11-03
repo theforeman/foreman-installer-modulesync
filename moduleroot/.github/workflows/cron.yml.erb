@@ -89,6 +89,14 @@ jobs:
         puppet:
           - "6"
           - "5"
+        <%- if @configs['excludes'].any? -%>
+        exclude:
+        <%- @configs['excludes'].each do |exclude| -%>
+        <%- exclude.each do |key, value| -%>
+          <%= key == exclude.first.first ? '-' : ' ' %> <%= key %>: "<%= value %>"
+        <%- end -%>
+        <%- end -%>
+        <%- end -%>
     name: Puppet ${{ matrix.puppet }} - ${{ matrix.setfile }}
     steps:
       - name: Enable IPv6 on docker

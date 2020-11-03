@@ -54,8 +54,10 @@ Gemfile:
 .travis.yml:
   delete: true
 .github/workflows/acceptance.yml:
+  excludes: []
   pidfile_workaround: false
 .github/workflows/cron.yml:
+  excludes: []
   pidfile_workaround: false
 spec/spec_helper.rb:
   requires: []
