@@ -89,6 +89,12 @@ jobs:
         puppet:
           - "6"
           - "5"
+        <%- @configs['beaker_fact_matrix'].each do |option, values| -%>
+        <%= option %>:
+        <%- values.each do |value| -%>
+          - "<%= value %>"
+        <%- end -%>
+        <%- end -%>
         <%- if @configs['excludes'].any? -%>
         exclude:
         <%- @configs['excludes'].each do |exclude| -%>
@@ -97,7 +103,13 @@ jobs:
         <%- end -%>
         <%- end -%>
         <%- end -%>
-    name: Puppet ${{ matrix.puppet }} - ${{ matrix.setfile }}
+    <%-
+      name = ['Puppet ${{ matrix.puppet }}', '${{ matrix.setfile }}']
+      @configs['beaker_fact_matrix'].each_key do |option|
+        name << "#{option.tr('_', ' ').capitalize} ${{ matrix.#{option} }}"
+      end
+    -%>
+    name: <%= name.join(' - ') %>
     steps:
       - name: Enable IPv6 on docker
         run: |
@@ -125,4 +137,7 @@ jobs:
         env:
           BEAKER_PUPPET_COLLECTION: puppet${{ matrix.puppet }}
           BEAKER_setfile: ${{ matrix.setfile }}
+          <%- @configs['beaker_fact_matrix'].keys.each do |fact| -%>
+          BEAKER_FACTER_<%= fact.upcase %>: ${{ matrix.<%= fact %> }}
+          <%- end -%>
 <%- end -%>

@@ -43,7 +43,7 @@ Gemfile:
       groups:
       - 'development'
   - gem: 'voxpupuli-acceptance'
-    version: '~> 0.2'
+    version: '~> 0.3'
     options:
       groups:
         - 'system_tests'
@@ -54,9 +54,11 @@ Gemfile:
 .travis.yml:
   delete: true
 .github/workflows/acceptance.yml:
+  beaker_fact_matrix: {}
   excludes: []
   pidfile_workaround: false
 .github/workflows/cron.yml:
+  beaker_fact_matrix: {}
   excludes: []
   pidfile_workaround: false
 spec/spec_helper.rb:
