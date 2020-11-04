@@ -43,8 +43,8 @@ jobs:
         <%- if @configs['excludes'].any? -%>
         exclude:
         <%- @configs['excludes'].each do |exclude| -%>
-        <%- exclude.each do |key, value| -%>
-          <%= key == exclude.first.first ? '-' : ' ' %> <%= key %>: "<%= value %>"
+        <%- exclude.each_with_index do |(key, value), index| -%>
+          <%= index == 0 ? '-' : ' ' %> <%= key %>: "<%= value %>"
         <%- end -%>
         <%- end -%>
         <%- end -%>
