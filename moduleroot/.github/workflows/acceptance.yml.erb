@@ -34,8 +34,9 @@ jobs:
         setfile:
           <%- require 'puppet_metadata' -%>
           <%- metadata_file = File.join(@metadata[:workdir], 'metadata.json') -%>
-          <%- PuppetMetadata.read(metadata_file).beaker_setfiles(use_fqdn: true, pidfile_workaround: @configs['pidfile_workaround']) do |setfile| -%>
-          - <%= setfile %>
+          <%- PuppetMetadata.read(metadata_file).beaker_setfiles(use_fqdn: true, pidfile_workaround: @configs['pidfile_workaround']) do |setfile, name| -%>
+          - value: <%= setfile %>
+            name: <%= name %>
           <%- end -%>
         puppet:
           - "6"
@@ -55,7 +56,7 @@ jobs:
         <%- end -%>
         <%- end -%>
     <%-
-      name = ['Puppet ${{ matrix.puppet }}', '${{ matrix.setfile }}']
+      name = ['Puppet ${{ matrix.puppet }}', '${{ matrix.setfile.name }}']
       @configs['beaker_fact_matrix'].each_key do |option|
         name << "#{option.tr('_', ' ').capitalize} ${{ matrix.#{option} }}"
       end
@@ -87,7 +88,7 @@ jobs:
         run: bundle exec rake beaker
         env:
           BEAKER_PUPPET_COLLECTION: puppet${{ matrix.puppet }}
-          BEAKER_setfile: ${{ matrix.setfile }}
+          BEAKER_setfile: ${{ matrix.setfile.value }}
           <%- @configs['beaker_fact_matrix'].keys.each do |fact| -%>
           BEAKER_FACTER_<%= fact.upcase %>: ${{ matrix.<%= fact %> }}
           <%- end -%>
