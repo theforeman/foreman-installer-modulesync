@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '4 4 * * *'
 
+env:
+  BUNDLE_PATH: vendor/bundle
+  BUNDLE_JOBS: 4
+  BUNDLE_RETRY: 3
+
 jobs:
   unit:
     if: github.repository == '<%= @configs[:namespace] %>/<%= @configs[:puppet_module] %>'
@@ -23,6 +28,7 @@ jobs:
           - ruby: "2.4"
             puppet: "6"
     env:
+      BUNDLE_WITHOUT: development:system_tests
       PUPPET_VERSION: "${{ matrix.puppet }}.0"
     name: Puppet ${{ matrix.puppet }} (Ruby ${{ matrix.ruby }})
     steps:
@@ -40,9 +46,7 @@ jobs:
       - name: Install dependencies
         run: |
           gem install bundler
-          bundle config path vendor/bundle
-          bundle config without 'development system_tests'
-          bundle install --jobs 4 --retry 3
+          bundle install
       - name: Run tests
         run: bundle exec rake
 <%- if Dir[File.join(@metadata[:workdir], 'spec', 'acceptance', '**', '*_spec.rb')].any? -%>
@@ -50,6 +54,8 @@ jobs:
   build_cache:
     if: github.repository == '<%= @configs[:namespace] %>/<%= @configs[:puppet_module] %>'
     runs-on: ubuntu-latest
+    env:
+      BUNDLE_WITHOUT: development:test
     steps:
       - name: Enable IPv6 on docker
         run: |
@@ -69,14 +75,14 @@ jobs:
       - name: Install dependencies
         run: |
           gem install bundler
-          bundle config path vendor/bundle
-          bundle config without 'development test'
-          bundle install --jobs 4 --retry 3
+          bundle install
 
   acceptance:
     if: github.repository == '<%= @configs[:namespace] %>/<%= @configs[:puppet_module] %>'
     needs: build_cache
     runs-on: ubuntu-latest
+    env:
+      BUNDLE_WITHOUT: development:test
     strategy:
       fail-fast: false
       matrix:
@@ -130,9 +136,7 @@ jobs:
       - name: Install dependencies
         run: |
           gem install bundler
-          bundle config path vendor/bundle
-          bundle config without 'development test'
-          bundle install --jobs 4 --retry 3
+          bundle install
       - name: Run tests
         run: bundle exec rake beaker
         env:
