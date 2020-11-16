@@ -42,6 +42,11 @@ Gemfile:
     options:
       groups:
       - 'development'
+  - gem: 'puppet_metadata'
+    version: '~> 0.3'
+    options:
+      groups:
+        - 'system_tests'
   - gem: 'voxpupuli-acceptance'
     version: '~> 0.3'
     options:

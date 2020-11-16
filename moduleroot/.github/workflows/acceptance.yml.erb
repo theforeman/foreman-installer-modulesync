@@ -10,8 +10,12 @@ env:
   BUNDLE_RETRY: 3
 
 jobs:
-  build_cache:
+  setup_matrix:
+    name: 'Setup Test Matrix'
     runs-on: ubuntu-latest
+    outputs:
+      setfiles: ${{ steps.get-setfiles.outputs.setfiles }}
+      puppet_major_versions: ${{ steps.get-setfiles.outputs.puppet_major_versions }}
     steps:
       - uses: actions/checkout@v2
       - name: Setup ruby
@@ -29,23 +33,18 @@ jobs:
           gem install bundler
           bundle install
           bundle clean
+      - name: Setup Acceptance Test Matrix
+        id: get-setfiles
+        run: bundle exec metadata2gha-beaker --use-fqdn --pidfile-workaround <%= @configs['pidfile_workaround'] %>
 
   acceptance:
-    needs: build_cache
+    needs: setup_matrix
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        setfile:
-          <%- require 'puppet_metadata' -%>
-          <%- metadata_file = File.join(@metadata[:workdir], 'metadata.json') -%>
-          <%- PuppetMetadata.read(metadata_file).beaker_setfiles(use_fqdn: true, pidfile_workaround: @configs['pidfile_workaround']) do |setfile, name| -%>
-          - value: <%= setfile %>
-            name: <%= name %>
-          <%- end -%>
-        puppet:
-          - "6"
-          - "5"
+        setfile: ${{fromJson(needs.setup_matrix.outputs.setfiles)}}
+        puppet: ${{fromJson(needs.setup_matrix.outputs.puppet_major_versions)}}
         <%- @configs['beaker_fact_matrix'].each do |option, values| -%>
         <%= option %>:
         <%- values.each do |value| -%>

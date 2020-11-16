@@ -52,9 +52,13 @@ jobs:
         run: bundle exec rake
 <%- if Dir[File.join(@metadata[:workdir], 'spec', 'acceptance', '**', '*_spec.rb')].any? -%>
 
-  build_cache:
+  setup_matrix:
+    name: 'Setup Test Matrix'
     if: github.repository == '<%= @configs[:namespace] %>/<%= @configs[:puppet_module] %>'
     runs-on: ubuntu-latest
+    outputs:
+      setfiles: ${{ steps.get-setfiles.outputs.setfiles }}
+      puppet_major_versions: ${{ steps.get-setfiles.outputs.puppet_major_versions }}
     env:
       BUNDLE_WITHOUT: development:test
     steps:
@@ -78,23 +82,21 @@ jobs:
           gem install bundler
           bundle install
           bundle clean
+      - name: Setup Acceptance Test Matrix
+        id: get-setfiles
+        run: bundle exec metadata2gha-beaker --use-fqdn --pidfile-workaround <%= @configs['pidfile_workaround'] %>
 
   acceptance:
     if: github.repository == '<%= @configs[:namespace] %>/<%= @configs[:puppet_module] %>'
-    needs: build_cache
+    needs: setup_matrix
     runs-on: ubuntu-latest
     env:
       BUNDLE_WITHOUT: development:test
     strategy:
       fail-fast: false
       matrix:
-        setfile:
-          <%- require 'puppet_metadata' -%>
-          <%- metadata_file = File.join(@metadata[:workdir], 'metadata.json') -%>
-          <%- PuppetMetadata.read(metadata_file).beaker_setfiles(use_fqdn: true, pidfile_workaround: @configs['pidfile_workaround']) do |setfile, name| -%>
-          - value: <%= setfile %>
-            name: <%= name %>
-          <%- end -%>
+        setfile: ${{fromJson(needs.setup_matrix.outputs.setfiles)}}
+        puppet: ${{fromJson(needs.setup_matrix.outputs.puppet_major_versions)}}
         puppet:
           - "6"
           - "5"
