@@ -47,6 +47,7 @@ jobs:
         run: |
           gem install bundler
           bundle install
+          bundle clean
       - name: Run tests
         run: bundle exec rake
 <%- if Dir[File.join(@metadata[:workdir], 'spec', 'acceptance', '**', '*_spec.rb')].any? -%>
@@ -76,6 +77,7 @@ jobs:
         run: |
           gem install bundler
           bundle install
+          bundle clean
 
   acceptance:
     if: github.repository == '<%= @configs[:namespace] %>/<%= @configs[:puppet_module] %>'
@@ -137,6 +139,7 @@ jobs:
         run: |
           gem install bundler
           bundle install
+          bundle clean
       - name: Run tests
         run: bundle exec rake beaker
         env:

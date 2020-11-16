@@ -44,5 +44,6 @@ jobs:
         run: |
           gem install bundler
           bundle install
+          bundle clean
       - name: Run tests
         run: bundle exec rake
