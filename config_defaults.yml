@@ -37,6 +37,8 @@ Gemfile:
     options:
       groups:
       - 'development'
+  - gem: 'puppet_metadata'
+    version: '~> 0.3'
   - gem: puppet-blacksmith
     version: '>= 6.0.0'
     options:
@@ -51,13 +53,13 @@ Gemfile:
   default_disabled_lint_checks:
   - '140chars'
   - 'class_inherits_from_params_class'
-.travis.yml:
-  delete: true
 .github/workflows/acceptance.yml:
-  beaker_fact_matrix: {}
-  excludes: []
-  pidfile_workaround: false
+  delete: true
+.github/workflows/unit.yml:
+  delete: true
 .github/workflows/cron.yml:
+  delete: true
+.github/workflows/ci.yml:
   beaker_fact_matrix: {}
   excludes: []
   pidfile_workaround: false
