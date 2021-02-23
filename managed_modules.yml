@@ -10,7 +10,6 @@
 - puppet-katello
 - puppet-katello_devel
 - puppet-motd
-- puppet-pulp
 - puppet-pulpcore
 - puppet-puppet
 - puppet-puppetserver_foreman
