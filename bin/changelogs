@@ -51,7 +51,7 @@ async def get_changelog_token(key='github/changelog') -> str:
         return os.environ[TOKEN_ENV_VAR]
     except KeyError:
         logging.debug('Getting changelog token from %s', key)
-        cmd = ['pass', 'show', key]
+        cmd = ['gopass', 'show', key]
         return await check_output(cmd, path=os.getcwd())
 
 
