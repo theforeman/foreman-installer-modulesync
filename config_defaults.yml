@@ -53,12 +53,6 @@ Gemfile:
   default_disabled_lint_checks:
   - '140chars'
   - 'class_inherits_from_params_class'
-.github/workflows/acceptance.yml:
-  delete: true
-.github/workflows/unit.yml:
-  delete: true
-.github/workflows/cron.yml:
-  delete: true
 .github/workflows/ci.yml:
   beaker_fact_matrix: {}
   excludes: []
