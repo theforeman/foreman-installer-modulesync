@@ -32,6 +32,9 @@ Gemfile:
       - 'test'
   - gem: voxpupuli-test
     version: '~> 1.4'
+    options:
+      groups:
+      - 'test'
   - gem: github_changelog_generator
     version: '>= 1.15.0'
     options:
@@ -46,6 +49,10 @@ Gemfile:
       - 'development'
   - gem: 'voxpupuli-acceptance'
     version: '~> 1.0'
+    options:
+      groups:
+        - 'system_tests'
+  - gem: 'puppetlabs_spec_helper'
     options:
       groups:
         - 'system_tests'
