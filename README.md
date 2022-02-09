@@ -8,6 +8,17 @@ across all of the Foreman installer modules.
 A full description of ModuleSync can be found in [ModuleSync's
 README](https://github.com/puppetlabs/modulesync).
 
+## Bulk updating of module dependencies
+
+You can use [metadata_json_deps](https://github.com/ekohl/metadata_json_deps) to verify all modules allow the latest (released) modules on the [Forge](https://forge.puppet.com/). See its README for details, but it boils down to:
+
+```console
+$ bundle exec rake metadata_deps
+...
+$ bundle exec bump-dependency-upper-bound puppetlabs/stdlib 8.0.0 modules/*/*/metadata.json
+...
+```
+
 ## Releasing
 
 ### Setup
