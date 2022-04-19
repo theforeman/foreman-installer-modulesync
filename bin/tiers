@@ -55,10 +55,17 @@ def get_tiers(metadata) -> Sequence[AbstractSet[Module]]:
 
     return tiers
 
+def format_module(module, output):
+    if output == 'checklist':
+        result=f'- [ ] {module}'
+    else:
+        result=f'{module}\t{module.directory}'
+    return result
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument('--tier', nargs='?', type=int)
+    parser.add_argument('--output', type=str, choices=['classic', 'checklist'], default='classic')
     parser.add_argument('metadata', nargs='+', type=argparse.FileType('r'))
 
     args = parser.parse_args()
@@ -69,12 +76,12 @@ def main() -> None:
         for tier, modules in enumerate(tiers):
             if args.tier == tier:
                 for module in sorted(modules):
-                    print(f'{module}\t{module.directory}')
+                    print(format_module(module, args.output))
     else:
         for tier, modules in enumerate(tiers):
-            print(f'Tier {tier}')
+            print(f'# Tier {tier}')
             for module in sorted(modules):
-                print(f'  {module}\t{module.directory}')
+                print(f'  {format_module(module, args.output)}')
 
 
 if __name__ == '__main__':
