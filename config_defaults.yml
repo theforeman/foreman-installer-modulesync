@@ -67,7 +67,5 @@ Gemfile:
 spec/spec_helper.rb:
   requires: []
   custom_facts: []
-spec/spec_helper_acceptance.rb:
-  locale_workaround: false
 Rakefile:
   param_docs_pattern: []
