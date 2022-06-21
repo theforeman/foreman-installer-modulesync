@@ -9,6 +9,8 @@ require '<%= r %>'
 <% end -%>
 require 'voxpupuli/test/spec_helper'
 
+add_mocked_facts!
+
 <% if @configs['custom_facts'].any? -%>
 <% @configs['custom_facts'].each do |fact| -%>
 add_custom_fact :<%= fact['name'] %>, <%= fact['value'].inspect %> # <%= fact['source'] %>
