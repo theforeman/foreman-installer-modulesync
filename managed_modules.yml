@@ -7,7 +7,6 @@
 - puppet-foreman_proxy
 - puppet-foreman_proxy_content
 - puppet-foreman_scap_client
-- puppet-git
 - puppet-katello
 - puppet-katello_devel
 - puppet-motd
