@@ -6,6 +6,7 @@ Gemfile:
       groups:
       - 'test'
   - gem: puppet-lint-spaceship_operator_without_tag-check
+    version: '~> 1.0'
     options:
       groups:
       - 'test'
