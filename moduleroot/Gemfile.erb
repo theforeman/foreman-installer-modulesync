@@ -3,14 +3,11 @@
 
 source 'https://rubygems.org'
 
-gem 'puppet', ENV['PUPPET_GEM_VERSION'] || '>= 5.5', groups: ['development', 'test']
+gem 'puppet', ENV['PUPPET_GEM_VERSION'] || '>= 7', groups: ['development', 'test']
 gem 'rake'
 
 <% (@configs['required'] + (@configs['extra'] || [])).each do |gem| -%>
 gem '<%= gem['gem'] %>'<%= ", '#{gem['version']}'" if gem['version'] %><%= ", #{gem['options'].inspect}" if gem['options'] %><%= " if RUBY_VERSION #{gem['ruby_version']}" if (gem['ruby_version']) %>
 <% end -%>
-
-# Pin rdoc to prevent updating bundled psych (https://github.com/ruby/rdoc/commit/ebe185c8775b2afe844eb3da6fa78adaa79e29a4)
-gem 'rdoc', '< 6.4'
 
 # vim:ft=ruby

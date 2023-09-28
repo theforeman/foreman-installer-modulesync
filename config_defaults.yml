@@ -31,7 +31,7 @@ Gemfile:
       groups:
       - 'test'
   - gem: voxpupuli-test
-    version: '~> 5.0'
+    version: '~> 7.0'
     options:
       groups:
       - 'test'
@@ -41,14 +41,14 @@ Gemfile:
       groups:
       - 'development'
   - gem: 'puppet_metadata'
-    version: '~> 1.3'
+    version: '~> 3.0'
   - gem: puppet-blacksmith
     version: '>= 6.0.0'
     options:
       groups:
       - 'development'
   - gem: 'voxpupuli-acceptance'
-    version: '~> 1.0'
+    version: '~> 2.0'
     options:
       groups:
         - 'system_tests'
