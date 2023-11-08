@@ -11,7 +11,7 @@ git verify-tag "$VERSION"
 git push --follow-tags
 
 rm -f REFERENCE.md
-if basename "$PWD" | grep -E -q '^puppet-(candlepin|dns|dhcp|git|pulp|pulpcore|motd|qpid|tftp|foreman_simple_user)$' ; then
+if basename "$PWD" | grep -E -q '^puppet-(candlepin|dns|dhcp|git|pulp|pulpcore|motd|qpid|tftp|foreman_simple_user|foreman_scap_client)$' ; then
 	bundle exec rake strings:generate:reference
 fi
 
