@@ -21,7 +21,7 @@ Gemfile:
       groups:
       - 'development'
   - gem: 'puppet_metadata'
-    version: '~> 3.4'
+    version: '~> 4.0'
   - gem: puppet-blacksmith
     version: '>= 6.0.0'
     options:
