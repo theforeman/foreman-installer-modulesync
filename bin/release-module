@@ -16,4 +16,4 @@ if basename "$PWD" | grep -E -q '^puppet-(candlepin|dns|dhcp|git|pulp|pulpcore|m
 fi
 
 BLACKSMITH_FORGE_USERNAME="$(jq -r .author metadata.json | tr '[:upper:]' '[:lower:]')"
-BLACKSMITH_FORGE_API_KEY="$(gopass show "theforeman/shared/forge.puppet.com/$BLACKSMITH_FORGE_USERNAME" api-key)" bundle exec rake module:clean module:push
+BLACKSMITH_FORGE_API_KEY="$(gopass show "theforeman/shared/forge.puppet.com/$BLACKSMITH_FORGE_USERNAME" API-key)" bundle exec rake module:clean module:push
