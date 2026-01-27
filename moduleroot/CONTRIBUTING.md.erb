@@ -211,7 +211,7 @@ and specifically the [section for running tests](https://github.com/mcanevet/rsp
 1. Make sure you've met Prerequisites.
 
 2. Acceptance tests are running within a VM, so make sure you have installed:
-  - `docker` **or** 
+  - `docker` **or**
   - `vagrant` with `VirtualBox` as the provider **or**
   - `vagrant` and `vagrant-libvirt` with `libvirt` as the provider
 
@@ -221,7 +221,7 @@ Additonal info can be found at [voxpupuli-acceptance](https://github.com/voxpupu
 3. Run the tests:
  - `BEAKER_HYPERVISOR=vagrant_libvirt bundle exec rake beaker`
    - Use `bundle exec rspec spec/acceptance/my_test.rb -e "test"` to run a specific test as you'd usually do with `rspec`.
- 
+
  This will use `vagrant` and `libvirt` as the provider to create a VM and will run all tests there.
 
 4. You can additionally specify:
