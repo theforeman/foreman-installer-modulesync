@@ -20,7 +20,6 @@ jobs:
 <%- if Dir[File.join(@metadata[:workdir], 'spec', 'acceptance', '**', '*_spec.rb')].any? -%>
     uses: voxpupuli/gha-puppet/.github/workflows/beaker.yml@v4
     with:
-      pidfile_workaround: '<%= @configs['pidfile_workaround'] %>'
 <%- if @configs['beaker_facter'] -%>
       beaker_facter: '<%= @configs['beaker_facter'] %>'
 <%- end -%>
