@@ -43,7 +43,6 @@ Gemfile:
 .github/workflows/ci.yml:
   beaker_fact_matrix: {}
   excludes: []
-  pidfile_workaround: false
 spec/spec_helper.rb:
   requires: []
   custom_facts: []
