@@ -6,12 +6,12 @@ Gemfile:
       groups:
       - 'test'
   - gem: puppet-lint-spaceship_operator_without_tag-check
-    version: '~> 1.0'
+    version: '~> 2.0'
     options:
       groups:
       - 'test'
   - gem: voxpupuli-test
-    version: '~> 9.0'
+    version: '~> 14.0'
     options:
       groups:
       - 'test'
