@@ -44,3 +44,4 @@ spec/spec_helper.rb:
   custom_facts: []
 Rakefile:
   param_docs_pattern: []
+  tag_pattern: '%s'
