@@ -32,10 +32,6 @@ Gemfile:
     options:
       groups:
         - 'system_tests'
-  - gem: 'puppetlabs_spec_helper'
-    options:
-      groups:
-        - 'system_tests'
 .puppet-lint.rc:
   default_disabled_lint_checks:
   - '140chars'
