@@ -7,7 +7,7 @@ fi
 VERSION="$(bundle exec rake module:version)"
 
 bundle exec rake module:tag
-git verify-tag "$VERSION"
+git verify-tag "$VERSION" || git verify-tag v"$VERSION"
 git push --follow-tags
 
 rm -f REFERENCE.md
